@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eva — 採購 / 簡約生活</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF3EA;
+    --cream-2: #F5E9DB;
+    --terracotta: #C97C5D;
+    --terracotta-dark: #A85E44;
+    --brown: #4A3B32;
+    --brown-soft: #7A6659;
+    --line: rgba(74, 59, 50, 0.12);
+    --sage: #8CA07A;
+    --sage-dark: #5F7350;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Noto Sans TC", sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: "Cormorant Garamond", serif; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 8%;
+    z-index: 100;
+    background: rgba(251, 243, 234, 0.85);
+    backdrop-filter: blur(8px);
+    transition: box-shadow 0.3s ease;
+  }
+
+  nav .logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--terracotta-dark);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  nav .logo::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sage);
+    display: inline-block;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--brown-soft);
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+    transition: color 0.25s ease;
+  }
+
+  nav a:hover { color: var(--terracotta-dark); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 8%;
+    position: relative;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #E7B18F, var(--terracotta) 70%);
+    opacity: 0.85;
+    z-index: 0;
+    filter: blur(0px);
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 14%;
+    left: 50%;
+    transform: translateX(calc(-50% + 118px));
+    width: 46px;
+    height: 46px;
+    border-radius: 50% 50% 50% 8%;
+    background: var(--sage);
+    opacity: 0.9;
+    z-index: 1;
+    box-shadow: 0 10px 24px rgba(95, 115, 80, 0.3);
+  }
+
+  .avatar {
+    position: relative;
+    z-index: 1;
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: var(--terracotta-dark);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 20px 45px rgba(169, 94, 68, 0.25);
+    margin-bottom: 36px;
+  }
+
+  .hero .eyebrow {
+    position: relative;
+    z-index: 1;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    position: relative;
+    z-index: 1;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    color: var(--brown);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span { color: var(--terracotta-dark); font-style: italic; }
+
+  .hero p.tagline {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    color: var(--brown-soft);
+    font-size: 1.05rem;
+    font-weight: 300;
+  }
+
+  .scroll-hint {
+    margin-top: 56px;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    color: var(--brown-soft);
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-hint .line {
+    width: 1px;
+    height: 34px;
+    background: var(--terracotta);
+    animation: drop 1.8s infinite ease-in-out;
+  }
+
+  @keyframes drop {
+    0% { transform: scaleY(0); opacity: 0; }
+    40% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 0; }
+  }
+
+  /* ---------- Section shared ---------- */
+  section {
+    padding: 120px 8%;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-head .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta-dark);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  #values .section-head .eyebrow {
+    color: var(--sage-dark);
+  }
+
+  .section-head h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  }
+
+  /* ---------- About ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--brown-soft);
+    font-size: 1.02rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .about-text strong { color: var(--brown); font-weight: 500; }
+
+  .quote-card {
+    background: var(--cream-2);
+    border-radius: 4px;
+    padding: 48px 40px;
+    border-left: 3px solid var(--terracotta);
+    position: relative;
+  }
+
+  .quote-card::after {
+    content: "";
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+
+  .quote-card .mark {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 4rem;
+    color: var(--terracotta);
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .quote-card p {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--brown);
+    font-weight: 500;
+  }
+
+  /* ---------- Values / cards ---------- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--terracotta);
+    border-radius: 6px;
+    padding: 40px 32px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .card:nth-child(2) {
+    border-top-color: var(--sage);
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 40px rgba(169, 94, 68, 0.14);
+  }
+
+  .card .num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1rem;
+    color: var(--terracotta);
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .card:nth-child(2) .num {
+    color: var(--sage-dark);
+  }
+
+  .card h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--brown);
+  }
+
+  .card p {
+    color: var(--brown-soft);
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+
+  /* ---------- Skills ---------- */
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .pill {
+    padding: 12px 26px;
+    border: 1px solid var(--terracotta);
+    border-radius: 30px;
+    color: var(--terracotta-dark);
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    background: transparent;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .pill:hover {
+    background: var(--terracotta);
+    color: #fff;
+  }
+
+  .pill:nth-child(even) {
+    border-color: var(--sage);
+    color: var(--sage-dark);
+  }
+
+  .pill:nth-child(even):hover {
+    background: var(--sage);
+    color: #fff;
+  }
+
+  /* ---------- Footer / contact ---------- */
+  footer {
+    text-align: center;
+    padding: 100px 8% 60px;
+    background: var(--cream-2);
+    margin-top: 60px;
+  }
+
+  footer .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta-dark);
+    margin-bottom: 14px;
+  }
+
+  footer h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    margin-bottom: 18px;
+  }
+
+  footer p {
+    color: var(--brown-soft);
+    max-width: 420px;
+    margin: 0 auto 36px;
+    font-weight: 300;
+  }
+
+  .footer-name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.1rem;
+    color: var(--brown);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-sub {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--sage-dark);
+    opacity: 0.85;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    nav ul { gap: 22px; }
+    nav a { font-size: 0.82rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .cards { grid-template-columns: 1fr; }
+    section { padding: 90px 7%; }
+  }
+
+  @media (max-width: 520px) {
+    nav { padding: 20px 6%; }
+    nav ul { gap: 14px; }
+    .hero::before { width: 200px; height: 200px; }
+    .avatar { width: 118px; height: 118px; font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Eva</div>
+    <ul>
+      <li><a href="#about">關於我</a></li>
+      <li><a href="#values">工作態度</a></li>
+      <li><a href="#skills">專業領域</a></li>
+      <li><a href="#contact">聯繫</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="avatar">E</div>
+    <span class="eyebrow">Procurement Specialist</span>
+    <h1>嗨，我是 <span>Eva</span></h1>
+    <p class="tagline">一名喜歡把事情做得簡潔、有效率的採購人員。</p>
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <span class="line"></span>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head">
+      <span class="eyebrow">About Me</span>
+      <h2>關於我</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>我是 <strong>Eva</strong>，目前的職業是<strong>採購</strong>。工作上每天都在跟報價、供應商與流程打交道，久而久之養成了一個習慣——喜歡把複雜的事情整理成<strong>簡潔</strong>清楚的樣子。</p>
+        <p>對我來說，簡潔不只是一種美感,更是一種效率。少一點雜訊，多一點清晰,無論是採購流程還是生活方式，都是我一直在追求的方向。</p>
+      </div>
+      <div class="quote-card">
+        <span class="mark">"</span>
+        <p>簡單，是把複雜想清楚之後留下來的樣子。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="values">
+    <div class="section-head">
+      <span class="eyebrow">How I Work</span>
+      <h2>工作態度</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>條理清晰</h3>
+        <p>將採購流程、比價與溝通拆解成明確步驟，減少不必要的往返與誤會。</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>務實高效</h3>
+        <p>重視結果與時效，不做多餘的形式，把時間留給真正重要的決策。</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>穩定可靠</h3>
+        <p>喜歡簡潔的人通常也重視秩序——說到做到，是我對合作夥伴的承諾。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <span class="eyebrow">Focus Areas</span>
+      <h2>專業領域</h2>
+    </div>
+    <div class="skills">
+      <span class="pill">供應商管理</span>
+      <span class="pill">成本議價</span>
+      <span class="pill">採購流程優化</span>
+      <span class="pill">庫存協調</span>
+      <span class="pill">合約審核</span>
+      <span class="pill">跨部門溝通</span>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <span class="eyebrow">Get In Touch</span>
+    <h2>一起簡單地把事情做好</h2>
+    <p>如果你也欣賞簡潔有效率的合作方式，歡迎與我聯繫。</p>
+    <div class="footer-name">Eva</div>
+    <div class="footer-sub">Procurement · Keep it simple</div>
+  </footer>
+
+</body>
+</html>
